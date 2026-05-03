@@ -1,91 +1,156 @@
-<script>
-const cityInput = document.getElementById('cityInput');
-const searchBtn = document.getElementById('searchBtn');
-const weatherInfo = document.getElementById('weatherInfo');
-const errorDiv = document.getElementById('error');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Portfolio</title>
 
-// ⚠️ Use your own API key (hide in real projects)
-const API_KEY = '0385a23d6dbd3e7d2b7842f4e9bdc2859e3cd87083623b1f6e05e1b715648bed';
-
-// Fetch weather
-async function getWeather() {
-    const city = cityInput.value.trim();
-
-    if (!city) {
-        showError('Please enter a city name!');
-        return;
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
     }
 
-    showError('Loading...');
-    weatherInfo.classList.remove('show');
-
-    try {
-        const response = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
-        );
-
-        const data = await response.json();
-
-        // Handle different errors
-        if (response.status === 404) {
-            throw new Error('City not found!');
-        }
-        if (response.status === 401) {
-            throw new Error('Invalid API key!');
-        }
-
-        displayWeather(data);
-        hideError();
-
-    } catch (error) {
-        showError(error.message || 'Something went wrong!');
-        hideWeatherInfo();
+    body {
+      background: linear-gradient(135deg, #1e1e2f, #3a3a6a);
+      color: white;
+      min-height: 100vh;
     }
-}
 
-// Display weather
-function displayWeather(data) {
-    document.getElementById('cityName').textContent =
-        `${data.name}, ${data.sys.country}`;
-
-    document.getElementById('temperature').textContent =
-        `${Math.round(data.main.temp)}°C`;
-
-    document.getElementById('feelsLike').textContent =
-        `${Math.round(data.main.feels_like)}°C`;
-
-    document.getElementById('humidity').textContent =
-        `${data.main.humidity}%`;
-
-    document.getElementById('windSpeed').textContent =
-        `${data.wind.speed} m/s`;
-
-    document.getElementById('description').textContent =
-        data.weather[0].description;
-
-    weatherInfo.classList.add('show');
-}
-
-// Error functions
-function showError(message) {
-    errorDiv.textContent = message;
-    errorDiv.classList.add('show');
-}
-
-function hideError() {
-    errorDiv.classList.remove('show');
-}
-
-function hideWeatherInfo() {
-    weatherInfo.classList.remove('show');
-}
-
-// Events
-searchBtn.addEventListener('click', getWeather);
-
-cityInput.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-        getWeather();
+    header {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-});
-</script>
+
+    header h1 {
+      font-size: 24px;
+      color: #00f7ff;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #00f7ff;
+    }
+
+    .hero {
+      text-align: center;
+      margin-top: 80px;
+      padding: 20px;
+    }
+
+    .hero h2 {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 12px 25px;
+      background: #00f7ff;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #00c6cc;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      color: #00f7ff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #aaa;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>MyWeb</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Projects</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Hi, I'm a Developer 👨‍💻</h2>
+    <p>I build AI tools, automation & web apps</p>
+    <button class="btn" onclick="showMessage()">Explore</button>
+  </section>
+
+  <section class="cards">
+    <div class="card">
+      <h3>AI Projects</h3>
+      <p>Building smart automation using AI tools</p>
+    </div>
+
+    <div class="card">
+      <h3>Web Development</h3>
+      <p>Creating modern and responsive websites</p>
+    </div>
+
+    <div class="card">
+      <h3>Automation</h3>
+      <p>n8n workflows and AI agents</p>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 My Portfolio | Built with ❤️
+  </footer>
+
+  <script>
+    function showMessage() {
+      alert("Welcome to my website 🚀");
+    }
+  </script>
+
+</body>
+</html>
